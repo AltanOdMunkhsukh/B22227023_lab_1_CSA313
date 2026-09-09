@@ -34,6 +34,12 @@ test.describe('SauceDemo нэвтрэх функц', () => {
     // Энэ хэсэг нь бол албаар тестэнд алдаа гаргахын тулд хийсэн хэсэг юм. Тиймээс энэ хэсгийг коммент хийж болно.
     // await expect(page.getByText('Products')).toHaveText('WRONG TEXT');
     await expect(page).toHaveURL(/inventory\.html/);
+        // logout
+        // Цэсний товчны data-test attritube нь зөвхөн товчон доторх зурган элементэд л байна
+        // Энийг гэхдээ бас getByRole-оор орлуулж болох юм байна.
+    await page.getByTestId('open-menu').click();  
+    await page.getByRole('link', { name: 'Logout' }).click();
+    await expect(page.getByPlaceholder('Username')).toBeVisible();
   });
 
   test('2. Амжилтгүй нэвтрэх (буруу нууц үг)', async ({ page }) => {
@@ -60,14 +66,14 @@ test.describe('SauceDemo нэвтрэх функц', () => {
     await page.getByRole('button', { name: 'Add to cart' }).first().click();
 
     // Сагсны тоолуур "1" болсныг шалгах
-    await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
-
+    await expect(page.getByTestId('shopping-cart-badge')).toHaveText('1');    
     // Сагсийг шалгах
-    await page.locator('.shopping_cart_link').click();
-    await expect(page.locator('.cart_item')).toHaveCount(1);
+    await page.getByTestId('shopping_cart_link').click();
+
+    await expect(page.getByTestId('inventory-item')).toHaveCount(1);
 
     // logout
-    await page.locator('#react-burger-menu-btn').click();
+    await page.getByTestId('open-menu').click();
     await page.getByRole('link', { name: 'Logout' }).click();
     await expect(page.getByPlaceholder('Username')).toBeVisible();
   });
