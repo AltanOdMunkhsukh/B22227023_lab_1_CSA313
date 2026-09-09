@@ -35,9 +35,8 @@ test.describe('SauceDemo нэвтрэх функц', () => {
     // await expect(page.getByText('Products')).toHaveText('WRONG TEXT');
     await expect(page).toHaveURL(/inventory\.html/);
         // logout
-        // Цэсний товчны data-test attritube нь зөвхөн товчон доторх зурган элементэд л байна
-        // Энийг гэхдээ бас getByRole-оор орлуулж болох юм байна.
-    await page.getByTestId('open-menu').click();  
+        // Энийг getByRole-оор орлууллаа илүү найдвартай юм байна.
+    await page.getByRole('button', { name: 'Open Menu' }).click();
     await page.getByRole('link', { name: 'Logout' }).click();
     await expect(page.getByPlaceholder('Username')).toBeVisible();
   });
@@ -68,12 +67,12 @@ test.describe('SauceDemo нэвтрэх функц', () => {
     // Сагсны тоолуур "1" болсныг шалгах
     await expect(page.getByTestId('shopping-cart-badge')).toHaveText('1');    
     // Сагсийг шалгах
-    await page.getByTestId('shopping_cart_link').click();
+    await page.getByTestId('shopping-cart-link').click();
 
     await expect(page.getByTestId('inventory-item')).toHaveCount(1);
 
     // logout
-    await page.getByTestId('open-menu').click();
+    await page.getByRole('button', { name: 'Open Menu' }).click();
     await page.getByRole('link', { name: 'Logout' }).click();
     await expect(page.getByPlaceholder('Username')).toBeVisible();
   });
